@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
+import { usePWAInstall } from './hooks/usePWAInstall';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 
@@ -29,8 +30,20 @@ import { X } from 'lucide-react';
 const PWABanner: React.FC = () => {
   const { settings } = useApp();
   const [showBanner, setShowBanner] = useState(true);
+  const { isInstallable, isInstalled, isIOS, install } = usePWAInstall();
+  const [showIOSGuide, setShowIOSGuide] = useState(false);
 
-  if (!showBanner) return null;
+  if (!showBanner || isInstalled) return null;
+
+  const handleInstall = async () => {
+    if (isInstallable) {
+      await install();
+    } else if (isIOS) {
+      setShowIOSGuide(true);
+    } else {
+      alert('Your browser does not support automatic installation. Please use the browser menu to install the app.');
+    }
+  };
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#14102c]/95 backdrop-blur-md border-t border-purple-900/40 px-4 py-2 flex items-center justify-between shadow-2xl">
@@ -50,7 +63,7 @@ const PWABanner: React.FC = () => {
 
       <div className="flex items-center gap-3">
         <button
-          onClick={() => alert('📲 App ready to install on home screen!')}
+          onClick={handleInstall}
           className="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all"
         >
           Install
@@ -62,6 +75,24 @@ const PWABanner: React.FC = () => {
           <X className="w-4 h-4" />
         </button>
       </div>
+
+      {showIOSGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-sm rounded-xl bg-[#1a1630] p-6 shadow-xl border border-purple-800">
+            <h3 className="text-lg font-semibold text-white">Install on iPhone / iPad</h3>
+            <p className="mt-2 text-sm text-gray-300">
+              1. Tap the <strong>Share</strong> button in Safari toolbar.<br />
+              2. Scroll down and tap <strong>Add to Home Screen</strong>.
+            </p>
+            <button
+              onClick={() => setShowIOSGuide(false)}
+              className="mt-4 w-full rounded-lg bg-purple-600 py-2 text-sm font-medium text-white hover:bg-purple-500"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
