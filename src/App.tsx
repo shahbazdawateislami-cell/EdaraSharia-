@@ -30,18 +30,15 @@ import { X } from 'lucide-react';
 const PWABanner: React.FC = () => {
   const { settings } = useApp();
   const [showBanner, setShowBanner] = useState(true);
-  const { isInstallable, isInstalled, isIOS, install } = usePWAInstall();
-  const [showIOSGuide, setShowIOSGuide] = useState(false);
+  const { isInstallable, isInstalled, install } = usePWAInstall();
 
   if (!showBanner || isInstalled) return null;
 
   const handleInstall = async () => {
     if (isInstallable) {
       await install();
-    } else if (isIOS) {
-      setShowIOSGuide(true);
     } else {
-      setShowIOSGuide(true); // Treat all unsupported browsers like iOS to show instruction guide
+      alert('To install the app, tap the browser menu (three dots) and select "Add to Home Screen".');
     }
   };
 
@@ -75,24 +72,6 @@ const PWABanner: React.FC = () => {
           <X className="w-4 h-4" />
         </button>
       </div>
-
-      {showIOSGuide && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-sm rounded-xl bg-[#1a1630] p-6 shadow-xl border border-purple-800">
-            <h3 className="text-lg font-semibold text-white">Install on iPhone / iPad</h3>
-            <p className="mt-2 text-sm text-gray-300">
-              1. Tap the <strong>Share</strong> button in Safari toolbar.<br />
-              2. Scroll down and tap <strong>Add to Home Screen</strong>.
-            </p>
-            <button
-              onClick={() => setShowIOSGuide(false)}
-              className="mt-4 w-full rounded-lg bg-purple-600 py-2 text-sm font-medium text-white hover:bg-purple-500"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
