@@ -1,0 +1,24 @@
+{
+  "name": "Edara Sharia ERP",
+  "short_name": "EdaraSharia",
+  "description": "Complete Edara Sharia & Madrasa ERP System.",
+  "start_url": "https://edara-sharia-erp.vercel.app/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b0819",
+  "theme_color": "#0b0819",
+  "icons": [
+    {
+      "src": "https://edara-sharia-erp.vercel.app/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://edara-sharia-erp.vercel.app/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
