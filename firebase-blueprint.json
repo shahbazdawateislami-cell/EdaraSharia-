@@ -1,0 +1,49 @@
+{
+  "entities": {
+    "Student": {
+      "title": "Student",
+      "description": "Student profile data",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "rollNo": { "type": "string" },
+        "class": { "type": "string" },
+        "fatherName": { "type": "string" },
+        "motherName": { "type": "string" },
+        "phone": { "type": "string" },
+        "dob": { "type": "string", "format": "date" },
+        "gender": { "type": "string" },
+        "address": { "type": "string" },
+        "bloodGroup": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "totalFees": { "type": "number" },
+        "paidFees": { "type": "number" }
+      },
+      "required": ["name", "rollNo", "class"]
+    },
+    "Teacher": {
+      "title": "Teacher",
+      "description": "Teacher profile data",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "subject": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "qualification": { "type": "string" },
+        "salary": { "type": "number" }
+      },
+      "required": ["name", "subject"]
+    }
+  },
+  "firestore": {
+    "students": {
+      "schema": { "$ref": "Student" },
+      "description": "All enrolled students"
+    },
+    "teachers": {
+      "schema": { "$ref": "Teacher" },
+      "description": "All teachers"
+    }
+  }
+}
