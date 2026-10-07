@@ -41,7 +41,7 @@ const PWABanner: React.FC = () => {
     } else if (isIOS) {
       setShowIOSGuide(true);
     } else {
-      alert('Your browser does not support automatic installation. Please use the browser menu to install the app.');
+      setShowIOSGuide(true); // Treat all unsupported browsers like iOS to show instruction guide
     }
   };
 
